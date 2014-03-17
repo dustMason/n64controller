@@ -1,0 +1,22 @@
+{
+  "name": "N64Controller"
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dustMason/N64Controller.git"
+  },
+  "author": "Jordan Sitkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dustMason/N64Controller/issues"
+  },
+  "homepage": "https://github.com/dustMason/N64Controller",
+  "dependencies": {
+    "node-hid": "~0.3.1"
+  }
+}
