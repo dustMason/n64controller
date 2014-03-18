@@ -1,8 +1,7 @@
-var HID = require('node-hid'),
+var HID = require('node-hid');
 
 function N64Controller(path) {
   HID.HID.call(this, path);
-  this.buttonHandlers = {};
   this.controlState = new Buffer(8);
   this.buttonAddresses = {
     "A":        [6, 0x04],
@@ -28,28 +27,26 @@ function N64Controller(path) {
     15: null
   };
 
-  // TODO look at the event system that the HID module
-  // is using and see how best to create a DSL for the
-  // controller buttons / controls based on that.
-
   this.on("data", function(data) {
 
     var dPad = data[5] & 0x0F
     if ((this.controlState[5] & 0x0F) != dPad) {
-      console.log(this.dPadDirections[dPad]);
+      this.emit("dpad", this.dPadDirections[dPad]);
     }
 
     var analogEW = data[0];
     var analogNS = data[1];
     if (this.controlState[0] != analogEW) {
-      console.log(analogEW);
+      this.emit("analogEW", analogEW);
+      this.emit("analog", [analogNS, analogEW]);
     }
     if (this.controlState[1] != analogNS) {
-      console.log(analogNS);
+      this.emit("analogNS", analogNS);
+      this.emit("analog", [analogNS, analogEW]);
     }
 
     // console.log(data);
-    for (key in this.buttonHandlers) {
+    for (key in this.buttonAddresses) {
       var address = this.buttonAddresses[key];
       var chunk = address[0];
       var mask = address[1];
@@ -59,9 +56,9 @@ function N64Controller(path) {
         (data[chunk] & mask)
       ) {
         if ((data[chunk] & mask) === mask) {
-          this.buttonHandlers[key][0]();
+          this.emit("press"+key);
         } else {
-          this.buttonHandlers[key][1]();
+          this.emit("release"+key);
         }
       }
     };
@@ -74,25 +71,4 @@ function N64Controller(path) {
 N64Controller.prototype = Object.create(HID.HID.prototype);
 N64Controller.prototype.constructor = N64Controller;
 
-N64Controller.prototype.onButton = function(buttonName, onPress, onRelease) {
-  handlers = [];
-  if (onPress) { handlers[0] = onPress }
-  if (onRelease) { handlers[1] = onRelease }
-  this.buttonHandlers[buttonName] = handlers;
-}
-
 module.exports = N64Controller;
-
-// -----
-
-// HID.devices().forEach(function(device) {
-//   if (device.product === 'Generic   USB  Joystick  ') {
-//     controller = new N64Controller(device.path);
-//   }
-// });
-//
-// function log(val) { return function() { console.log("log: ", val) } }
-//
-// controller.onButton("A", log("pressed a"), log("released a"));
-// controller.onButton("RSHOULDER", log("press r shoulder"), log("release r shoulder"));
-
