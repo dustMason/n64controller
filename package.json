@@ -1,5 +1,5 @@
 {
-  "name": "N64Controller"
+  "name": "n64controller",
   "version": "0.1.0",
   "description": "Exposes an easy to use event interface to a retrolink USB Nintendo 46 controller",
   "main": "index.js",
