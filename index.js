@@ -38,11 +38,11 @@ function N64Controller(path) {
     var analogNS = data[1];
     if (this.controlState[0] != analogEW) {
       this.emit("analogEW", analogEW);
-      this.emit("analog", [analogNS, analogEW]);
+      this.emit("analog", [analogEW, analogNS]);
     }
     if (this.controlState[1] != analogNS) {
       this.emit("analogNS", analogNS);
-      this.emit("analog", [analogNS, analogEW]);
+      this.emit("analog", [analogEW, analogNS]);
     }
 
     // console.log(data);
