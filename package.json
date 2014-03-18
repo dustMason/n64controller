@@ -1,6 +1,6 @@
 {
   "name": "n64controller",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Exposes an easy to use event interface to a retrolink USB Nintendo 46 controller",
   "main": "index.js",
   "scripts": {
