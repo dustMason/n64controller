@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dustMason/N64Controller.git"
+    "url": "https://github.com/dustMason/n64controller.git"
   },
   "author": "Jordan Sitkin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dustMason/N64Controller/issues"
+    "url": "https://github.com/dustMason/n64controller/issues"
   },
-  "homepage": "https://github.com/dustMason/N64Controller",
+  "homepage": "https://github.com/dustMason/n64controller",
   "dependencies": {
     "node-hid": "~0.3.1"
   }
